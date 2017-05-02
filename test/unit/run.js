@@ -82,11 +82,11 @@ var tests = [
   require('./sanitizer/wrap'),
   require('./service/http_json'),
   require('./service/configurations/PlaceHolder'),
+  require('./service/configurations/PointInPolygon'),
   require('./service/configurations/ServiceConfiguration'),
   require('./service/mget'),
   require('./service/search'),
   require('./service/interpolation'),
-  require('./service/pointinpolygon'),
   require('./service/language')
 ];
 

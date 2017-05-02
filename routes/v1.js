@@ -73,6 +73,7 @@ const isAdminOnlyAnalysis = require('../controller/predicates/is_admin_only_anal
 const hasResponseDataOrRequestErrors = any(hasResponseData, hasRequestErrors);
 
 const PlaceHolder = require('../service/configurations/placeholder');
+const PointInPolygon = require('../service/configurations/PointInPolygon');
 
 /**
  * Append routes to app
@@ -83,9 +84,9 @@ const PlaceHolder = require('../service/configurations/placeholder');
 function addRoutes(app, peliasConfig) {
   const esclient = elasticsearch.Client(peliasConfig.esclient);
 
-  const isPipServiceEnabled = require('../controller/predicates/is_service_enabled')(peliasConfig.api.pipService);
-
-  const pipService = require('../service/pointinpolygon')(peliasConfig.api.pipService);
+  const pipConfiguration = new PointInPolygon(peliasConfig.api.services.pip);
+  const pipService = require('../service/http_json')(pipConfiguration);
+  const isPipServiceEnabled = require('../controller/predicates/is_service_enabled')(pipConfiguration.getBaseUrl());
 
   const placeholderConfiguration = new PlaceHolder(peliasConfig.api.services.placeholder);
   const placeholderService = require('../service/http_json')(placeholderConfiguration);
